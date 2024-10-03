@@ -114,6 +114,13 @@ async function checkDist() {
     }
 }
 
+async function checkOnboarding() {
+    const onboarding = require('./dist/util/onboarding');
+
+    // check if onboarding is necessary
+    await onboarding.check(Boolean(process.env.ONBOARDING));
+}
+
 async function start() {
     console.log(`Starting Zigbee2MQTT ${watchdog ? `with watchdog (${watchdogDelays})` : `without watchdog`}.`);
     await checkDist();
@@ -123,6 +130,8 @@ async function start() {
     if (!semver.satisfies(process.version, version)) {
         console.log(`\t\tZigbee2MQTT requires node version ${version}, you are running ${process.version}!\n`);
     }
+
+    await checkOnboarding();
 
     // Validate settings
     const settings = require('./dist/util/settings');

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Zigbee2MQTT Onboarding</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                border: 0;
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+                margin: 1rem;
+                background-color: rgb(250, 249, 199);
+                color: black;
+                font-family: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', roboto, oxygen, ubuntu, cantarell, 'Fira Sans', 'Droid Sans',
+                    'Helvetica Neue', sans-serif;
+            }
+
+            .header {
+                text-align: center;
+                align-self: center;
+            }
+
+            h1 {
+                font-size: 3rem;
+                margin: 0.6rem 0;
+            }
+
+            h2 {
+                font-size: 2.5rem;
+                margin: 0.4rem 0;
+            }
+
+            p {
+                font-size: 1.5rem;
+                margin: 0.2rem 0;
+            }
+
+            form {
+                width: 80%;
+                align-self: center;
+                display: flex;
+                flex-direction: column;
+            }
+
+            fieldset {
+                display: flex;
+                flex-direction: column;
+                margin: 0.8rem 0;
+            }
+
+            legend {
+                background-color: #000;
+                color: #fff;
+                padding: 0.3rem 0.6rem;
+                font-weight: bold;
+            }
+
+            label,
+            input {
+                height: 1.5rem;
+            }
+
+            select,
+            button {
+                height: 2rem;
+            }
+
+            input,
+            select,
+            button {
+                margin-bottom: 0.4rem;
+            }
+
+            button {
+                align-self: center;
+                padding: 0.4rem 0.8rem;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="header">
+            <img src="https://www.zigbee2mqtt.io/logo.png" height="200" />
+            <h1>Zigbee2MQTT</h1>
+            <h2>Onboarding</h2>
+            <p>Fill out the following information to start.</p>
+        </div>
+
+        <form id="onboarding" method="post">
+            <fieldset>
+                <legend>MQTT</legend>
+
+                <label for="mqtt-base_topic">Base Topic:</label>
+                <input type="text" name="mqtt:base_topic" id="mqtt-base_topic" value="zigbee2mqtt" />
+
+                <label for="mqtt-server">Server:</label>
+                <input type="text" name="mqtt:server" id="mqtt-server" value="mqtt://localhost" />
+            </fieldset>
+
+            <fieldset>
+                <legend>Serial</legend>
+
+                <label for="serial-port">Port:</label>
+                <PortSelect />
+
+                <label for="adapter-select">Adapter:</label>
+                <select name="serial:adapter" id="adapter-select">
+                    <option value="deconz">deconz</option>
+                    <option value="ember">ember</option>
+                    <option value="zboss">zboss</option>
+                    <option value="zigate">zigate</option>
+                    <option value="zstack" selected>zstack</option>
+                    <option value="ezsp">[DEPRECATED] ezsp</option>
+                </select>
+
+                <label for="baudrate-select">Firmware baud rate:</label>
+                <select name="serial:baudrate" id="baudrate-select">
+                    <option value="38400">38400</option>
+                    <option value="57600">57600</option>
+                    <option value="115200" selected>115200</option>
+                    <option value="230400">230400</option>
+                    <option value="460800">460800</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>Advanced</legend>
+
+                <label for="log_level-select">Log level:</label>
+                <select name="advanced:log_level" id="log_level-select">
+                    <option value="debug">debug</option>
+                    <option value="info" selected>info</option>
+                    <option value="warning">warning</option>
+                    <option value="error">error</option>
+                </select>
+
+                <label for="advanced-pan_id">PAN ID:</label>
+                <input type="text" name="advanced:pan_id" id="advanced-pan_id" placeholder="GENERATE or 0x1a62" />
+
+                <label for="advanced-ext_pan_id">Extended PAN ID:</label>
+                <input
+                    type="text"
+                    name="advanced:ext_pan_id"
+                    id="advanced-ext_pan_id"
+                    placeholder="GENERATE or [0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd]"
+                />
+
+                <label for="advanced-network_key">Network key:</label>
+                <input
+                    type="text"
+                    name="advanced:network_key"
+                    id="advanced-network_key"
+                    placeholder="GENERATE or [1, 3, 5, 7, 9, 11, 13, 15, 0, 2, 4, 6, 8, 10, 12, 13]"
+                />
+
+                <label for="advanced-channel">Channel:</label>
+                <input type="number" name="advanced:channel" id="advanced-channel" value="20" min="11" max="26" step="1" />
+
+                <label for="advanced-transmit_power">Transmit power:</label>
+                <input type="number" name="advanced:transmit_power" id="advanced-transmit_power" value="5" min="5" max="20" step="1" />
+            </fieldset>
+
+            <fieldset>
+                <legend>Extensions</legend>
+
+                <label for="extensions-frontend">Frontend:</label>
+                <input type="checkbox" name="frontend" id="extensions-frontend" checked />
+
+                <label for="extensions-homeassistant">Home Assistant:</label>
+                <input type="checkbox" name="homeassistant" id="extensions-homeassistant" />
+            </fieldset>
+
+            <button type="submit">Save</button>
+        </form>
+    </body>
+</html>
